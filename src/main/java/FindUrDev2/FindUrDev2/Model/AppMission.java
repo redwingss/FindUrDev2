@@ -46,7 +46,7 @@ public class AppMission {
 		return mission_price;
 	}
 
-	public void getMission_price_id(Integer mission_price) {
+	public void setMission_price(Integer mission_price) {
 		this.mission_price = mission_price;
 	}
 

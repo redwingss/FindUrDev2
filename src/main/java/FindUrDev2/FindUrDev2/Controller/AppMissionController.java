@@ -49,31 +49,63 @@ public class AppMissionController {
 		@RequestMapping(value = {"/deleteMission/{mission_id}"}, method = RequestMethod.GET)
 		public String deleteMission(@PathVariable("mission_id") long mission_id, HttpServletResponse resp) throws ServletException, IOException {
 		    repository.deleteById(mission_id);
-		    resp.sendRedirect("http://localhost:8080");
+		    resp.sendRedirect("/");
 		    return "acceuil";
 		    
 		}
 	    
-	    // ajouter form mission work
+	    // add form mission work
 	    @RequestMapping(value = {"/addMission"}, method = RequestMethod.GET)
-		public String showAddMission(Model model) {
+		public String showAddMission(Model model){
 	    	MissionForm missionForm = new MissionForm();
 			model.addAttribute("missionForm", missionForm);
 			return "addMission";
 		}
-		// ajouter form mission work
+		// add form mission work
 		@RequestMapping(value = {"/addMission"}, method = RequestMethod.POST)
-		public String addMission(Model model, @ModelAttribute("MissionForm") MissionForm missionForm) {
+		public String addMission(Model model, @ModelAttribute("MissionForm") MissionForm missionForm, HttpServletResponse resp) throws ServletException, IOException {
 
 			AppMission appmission = new AppMission(missionForm.getMission_name(), missionForm.getMission_price(), missionForm.getMission_goal(), missionForm.getMission_category(), missionForm.getMission_phone());
 			if(missionForm.isSet(missionForm.getMission_name()) && missionForm.getMission_price() != null && missionForm.isSet(missionForm.getMission_goal()) && missionForm.isSet(missionForm.getMission_category())&& missionForm.isSet(missionForm.getMission_phone())){
 	            repository.save(appmission);
 	            appmissions.add(appmission);
 	            model.addAttribute("appmissions", appmissions);
+	            resp.sendRedirect("/");
 	            return "acceuil";
 	        }else{
 	            model.addAttribute("appmissions", appmissions);
 	            return this.showAddMission(model);
+	        }
+		}
+
+		
+		// EDIT 
+		
+	    // edit form mission work POSTMAN but not html
+	    @RequestMapping(value = {"/editMission/{mission_id}"}, method = RequestMethod.GET)
+		public String showEditMission(Model model){
+	    	MissionForm missionForm = new MissionForm();
+			model.addAttribute("missionForm", missionForm);
+			return "editMission";
+		}
+	    
+		// edit form mission work POSTMAN but not html
+		@RequestMapping(value = {"/editMission/{mission_id}"}, method = {RequestMethod.POST })
+		public String editMission(Model model, @ModelAttribute("MissionForm") MissionForm missionForm, @PathVariable("mission_id") Long mission_id, HttpServletResponse resp)throws ServletException, IOException  {
+
+			AppMission appmission = repository.getOne(mission_id);
+			if(missionForm.isSet(missionForm.getMission_name()) && missionForm.getMission_price() != null && missionForm.isSet(missionForm.getMission_goal()) && missionForm.isSet(missionForm.getMission_category())&& missionForm.isSet(missionForm.getMission_phone())){
+				appmission.setMission_name(missionForm.getMission_name());
+				appmission.setMission_price(missionForm.getMission_price());
+				appmission.setMission_goal(missionForm.getMission_goal());
+				appmission.setMission_category(missionForm.getMission_category());
+				appmission.setMission_phone(missionForm.getMission_phone());
+				repository.save(appmission);
+				resp.sendRedirect("/");
+	            return "editMission";
+	        }else{
+	            model.addAttribute("appmissions", appmissions);
+	            return this.showEditMission(model);
 	        }
 		}
 		

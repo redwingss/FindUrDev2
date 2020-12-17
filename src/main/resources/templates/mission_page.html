@@ -10,7 +10,7 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="acceuil.html">Mission</a>
+      <a class="navbar-brand" href="/">Mission</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
         aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -35,21 +35,30 @@
 
 
 <tr th:each ="appmission : ${appmissions}">
-  <section class="d-flex   border border-primary      p-3     ">
+  <section class="d-flex   border border-primary  p-3 ">
 
-<div style="text-align: center"><a th:href="@{/deleteMission/{mission_id}(mission_id=${mission_id})}">Supprimer</a></div>
-
+        <a th:href="@{/deleteMission/{mission_id}(mission_id=${mission_id})}" class="  ">
+        <button type="button" name="button" class="btn btn-danger  btn-block p-3 m-3  pb-5 mb-5  ">
+          <p>supprimer cette mission</p>
+        </button>
+        </a>
+        <a th:href="@{/editMission/{mission_id}(mission_id=${mission_id})}" class="  ">
+        <button type="button" name="button" class="btn btn-danger  btn-block p-3 m-3  pb-5 mb-5  ">
+          <p>editcette mission</p>
+        </button>
+        </a>
+        
 	      <div class="p-3  m-3 d-flex flex-column  align-items-center ">
-           	   
-               <h2 th:utext="${appmission.mission_name}">...</h2>
-               <p th:utext="${appmission.mission_price}"></p>
-               <p th:utext="${appmission.mission_goal}"></p>
-               <p th:utext="${appmission.mission_category}"></p>
-               <p th:utext="${appmission.mission_phone}"></p>
-      </div>
-                 
-</tr>
 
+        <h2 class ="" th:utext="${appmission.mission_name}">...</h2>
+        <div>
+          <p>Prix : <span th:utext="${appmission.mission_price}+ €"></span></p>
+          <p><span th:utext="${appmission.mission_goal}"></span></p>
+          <p>Catégorie : <span th:utext="${appmission.mission_category}"></span></p>
+          <p>Téléphone : <span th:utext="${appmission.mission_phone}"></span></p>
+        </div>
+      </div>
+</tr>
 
 
 </body>

@@ -36,19 +36,20 @@
 
 <tr th:each ="appmission : ${appmissions}">
   <section class="d-flex   border border-primary p-3 ">
-  
-<div style="text-align: center">
-	<a th:href="@{/missions/{mission_id}(mission_id=${appmission.mission_id})}"> Voir pour plus d'infos </a>
-</div>
+        <a th:href="@{/missions/{mission_id}(mission_id=${appmission.mission_id})}" class="  ">
+        		<button type="button" name="button" class="btn btn-success  btn-block p-3 m-3  pb-5 mb-5  ">
+          		<p>lire plus </p>
+        </button>
+        </a>
 
       <div class="p-3  m-3 d-flex flex-column  align-items-center ">
-           	   
-               <h2 th:utext="${appmission.mission_name}">...</h2>
-               <p th:utext="${appmission.mission_price}+ €"></p>
-               <p> But de la misison : </p>
-               <p th:utext="${appmission.mission_goal}"></p>
-               <p> Catégorie : </p>
-               <p th:utext="${appmission.mission_category}"></p>
+                 <h2 class ="" th:utext="${appmission.mission_name}">...</h2>
+        <div>  	   
+          <p>Prix : <span th:utext="${appmission.mission_price}+ €"></span></p>
+          <p><span th:utext="${appmission.mission_goal}"></span></p>
+          <p>Catégorie : <span th:utext="${appmission.mission_category}"></span></p>
+          <p>Téléphone : <span th:utext="${appmission.mission_phone}"></span></p>
+          </div>
 
 	</form>
                    </div>
